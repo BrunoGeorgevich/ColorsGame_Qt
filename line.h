@@ -12,11 +12,14 @@ class Line : public QObject
 
 public:
 
-    Line(int numOfColumns, int rightBtnIndex);
+    Line(int numOfColumns, int rightBtnIndex, bool status);
 
     Q_INVOKABLE
     QList<QObject *> getButtons();
+
+    Q_INVOKABLE
     bool isFirst();
+    void setFirst(bool isFirst);
 
 public slots:
 

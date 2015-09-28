@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    Game *game = new Game(5,5);
+    Game *game = new Game(8,8);
 
     QQmlApplicationEngine engine;
     QQmlContext *ctx = engine.rootContext();

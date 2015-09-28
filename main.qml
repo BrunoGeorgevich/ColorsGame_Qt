@@ -1,7 +1,7 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 
-import "."
+import "qrc:/pages"
 
 ApplicationWindow {
 
@@ -12,6 +12,7 @@ ApplicationWindow {
     visible: true
 
     StackView {
+        id:stackPages
         anchors.fill: parent
         initialItem: MenuPage {
 

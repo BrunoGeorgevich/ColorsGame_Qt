@@ -1,8 +1,10 @@
 #include "line.h"
 
-Line::Line(int numOfColumns, int rightBtnIndex)
+Line::Line(int numOfColumns, int rightBtnIndex, bool status)
 {
     _columns = numOfColumns;
+
+    _isFirst = status;
 
     for(int i = 0; i < _columns; i++) {
         Button *b;
@@ -27,12 +29,17 @@ bool Line::isFirst()
     return _isFirst;
 }
 
+void Line::setFirst(bool isFirst)
+{
+    _isFirst = isFirst;
+}
+
 void Line::buttonClicked(bool isRight)
 {
-    if(isRight) {
-        qDebug() << "The Button is the Right";
+    if(isRight && _isFirst) {
+        emit aButtonWasClicked(true);
     } else {
-        qDebug() << "The Button isn't the Right";
+        emit aButtonWasClicked(false);
     }
 }
 

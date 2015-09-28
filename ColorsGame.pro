@@ -17,14 +17,16 @@ SOURCES += main.cpp \
     line.cpp \
     rightbutton.cpp \
     commonbutton.cpp \
-    game.cpp
+    game.cpp \
+    settings.cpp
 
 HEADERS += \
     line.h \
     button.h \
     rightbutton.h \
     commonbutton.h \
-    game.h
+    game.h \
+    settings.h
 
 RESOURCES += \
     qml.qrc
