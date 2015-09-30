@@ -11,7 +11,7 @@ Rectangle {
     property alias mouseArea : mouse
 
     color:buttonColor
-    radius:10
+    radius:height*(0.2)
 
     Text {
         anchors.fill: parent

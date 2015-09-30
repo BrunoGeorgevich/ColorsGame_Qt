@@ -1,11 +1,38 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
 
+import "qrc:/components/"
+
 Rectangle {
+
+    objectName: "GamePage"
+    color:"transparent"
+
+    signal isTheCurrentItem;
+
+    onIsTheCurrentItem: {
+        bottomBar.content = bottomBarContentComponent
+    }
+
+    Component.onCompleted: {
+        _game.startTimer(300, 60);
+        _game.generateButtons();
+        addLines(_game.getLines());
+    }
+
     Connections {
         target:_game
         onRightAnswered:{
-            addLines(_game.getLines());
+            refreshGame();
+        }
+
+        onTimeEnded : {
+            if(currentTime <= 0) {
+                buttonsGrid.visible = false;
+                _game.stopTimer();
+            }
+
+            topBar.setTime(currentTime);
         }
     }
 
@@ -14,14 +41,15 @@ Rectangle {
 
         anchors {
             fill:parent
-            topMargin: parent.height/50
-            leftMargin: parent.width/50
-            rightMargin: parent.width/50
-            bottomMargin: parent.height/10
+            margins:parent.height*(0.05)
         }
 
-        cellWidth: width/_game.getColumns();
-        cellHeight:height/_game.getRows();
+        cellWidth: width/settings['columns'];
+        cellHeight:height/settings['rows'];
+
+        add : Transition {
+            PropertyAnimation { property:"scale"; from:0; to:1; duration:50; }
+        }
 
         model: ListModel {  id:buttonsGridModel  }
         delegate: Rectangle {
@@ -29,8 +57,10 @@ Rectangle {
             width:buttonsGrid.cellWidth*(0.9)
             height:buttonsGrid.cellHeight*(0.9)
 
-            color:(btn.getStatus()) ? ((line.isFirst()) ? "gold" : "black") : "lightGray";
+            radius:10
 
+            color:(btn.getStatus()) ? settings['primaryColor'] :
+                                      settings['secondaryColor'];
             MouseArea {
                 anchors.fill: parent
 
@@ -40,20 +70,38 @@ Rectangle {
             }
         }
     }
+    Component {
+        id:bottomBarContentComponent
 
-    Button {
-        anchors {
+        Item {
+            Image {
+                anchors {
+                    top:parent.top
+                    left:parent.left
+                    bottom:parent.bottom
 
-            top:buttonsGrid.bottom
+                    margins: (parent.width < parent.height) ?
+                                 parent.width*(0.3) : parent.height*(0.3)
+                }
 
-            topMargin: parent.height/50
-        }
+                source: "qrc:/images/back-arrow.png"
+                fillMode: Image.PreserveAspectFit
 
-        text:"Gerar"
+                MouseArea {
 
-        onClicked: {
-            _game.generateButtons();
-            addLines(_game.getLines());
+                    anchors.fill: parent
+                    onClicked: {
+
+                        var previousItem = stackPages.get(stackPages.depth - 2);
+
+                        if(previousItem.objectName == "MenuPage"){
+                            stackPages.replace(settingsPageComponent);
+                        } else {
+                            stackPages.pop()
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -73,8 +121,27 @@ Rectangle {
                                             btn:btn,
                                             line:line
                                         });
-
             });
+        });
+    }
+
+    function refreshGame() {
+
+        topBar.incrementScore();
+
+        for(var i = 0; i < settings['columns']; i++) {
+            buttonsGridModel.remove(buttonsGridModel.count - 1);
+        }
+
+        var line = _game.getLines()[0];
+        var btns = line.getButtons();
+
+        btns.forEach(function(btn) {
+
+            buttonsGridModel.insert(0, {
+                                        btn:btn,
+                                        line:line
+                                    });
         });
     }
 }

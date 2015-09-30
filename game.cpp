@@ -1,31 +1,45 @@
 #include "game.h"
 
-Game::Game(int r, int c)
+Game::Game()
 {
-    _rows = r;
-    _columns = c;
+    settings = NULL;
+    timer = new QTimer(this);
+
+    connect(timer, SIGNAL(timeout()),
+            this, SLOT(onTimeout()));
 
     qsrand(time(0));
 }
 
 bool Game::generateButtons()
 {
+    if(isSettingsEmpty()){
+        qDebug() << "SETTINGS IS EMPTY!";
+        return false;
+    }
+
+    Settings *s = (Settings *)settings;
+
     if(!_lines.isEmpty())
         _lines.clear();
 
     int index = 0;
     int prevIndex = 0;
 
-    for(int i = 0; i < _rows; i++) {
+    for(int i = 0; i < s->numOfRows(); i++) {
 
-        index = qrand() % _columns;
+        index = qrand() % s->numOfColumns();
 
         if(index == prevIndex)
-            index = qrand() % _columns;
+            index = qrand() % s->numOfColumns();
 
-        Line *l = new Line(_columns, index, (i == _rows - 1) ? true : false);
+        Line *l = new Line(s->numOfColumns(),
+                           index,
+                           (i == s->numOfRows() - 1) ? true : false);
+
         connect(l, SIGNAL(aButtonWasClicked(bool)),
                 this, SLOT(lineWasClicked(bool)));
+
         _lines.append(l);
 
         prevIndex = index;
@@ -69,15 +83,27 @@ void Game::lineWasClicked(bool answer)
     if(answer) {
         rightAnswer();
     } else {
-        qDebug() << "The Line isn't the First";
+        wrongAnswer();
     }
+}
+
+void Game::onTimeout()
+{
+    _time--;
+    emit timeEnded(_time);
 }
 
 void Game::rightAnswer()
 {
     _lines.removeLast();
+    _time++;
 
-    Line *nLine =  new Line(_columns,qrand() % _columns, false);
+    Settings *s = (Settings *)settings;
+
+    Line *nLine =  new Line(s->numOfColumns(),
+                            qrand() % s->numOfColumns(),
+                            false);
+
     connect(nLine, SIGNAL(aButtonWasClicked(bool)),
                     this, SLOT(lineWasClicked(bool)));
 
@@ -86,11 +112,16 @@ void Game::rightAnswer()
     Line *last = (Line *)_lines.last();
     last->setFirst(true);
 
-    qDebug() << _lines;
+    //qDebug() << _lines;
 
     emit rightAnswered();
 }
-Settings *Game::getSettings() const
+
+void Game::wrongAnswer()
+{
+    _time -= 3;
+}
+QObject *Game::getSettings() const
 {
     return settings;
 }
@@ -106,27 +137,18 @@ void Game::setSettings(int rows,
 
 bool Game::isSettingsEmpty()
 {
-    return (settings == NULL) ? true : false;
+    return (!settings) ? true : false;
 }
 
-int Game::getRows() const
+void Game::startTimer(int turn, int total)
 {
-    return _rows;
+    _time = total;
+    timer->start(turn);
 }
 
-void Game::setRows(int rows)
+void Game::stopTimer()
 {
-    _rows = rows;
-}
-
-int Game::getColumns() const
-{
-    return _columns;
-}
-
-void Game::setColumns(int columns)
-{
-    _columns = columns;
+    timer->stop();
 }
 
 

@@ -24,7 +24,7 @@ Rectangle {
 
         font {
             bold:true
-            pixelSize: height*(0.8)
+            pixelSize: height
         }
     }
 
@@ -36,7 +36,7 @@ Rectangle {
         }
         style: ComboBoxStyle {
             font {
-                pixelSize : parent.height/2
+                pixelSize : parent.height*(0.8)
             }
         }
 

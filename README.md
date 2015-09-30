@@ -1,5 +1,5 @@
--TODO-List : <br>
+TODO-List : <br>
 	-Improve performance.<br>
-	-Finish Settings System.<br>
-	-Create SettingsSlider.<br>
+	-Connect with a DB<br>
+	-Add sounds.<br>
 	-Create a nice UI.<br>

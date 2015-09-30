@@ -2,14 +2,19 @@
     <qresource prefix="/">
         <file>main.qml</file>
     </qresource>
+    <qresource prefix="/images">
+        <file alias="back-arrow.png">assets/Images/back-arrow.png</file>
+    </qresource>
     <qresource prefix="/pages">
         <file alias="MenuPage.qml">assets/Pages/MenuPage.qml</file>
         <file alias="GamePage.qml">assets/Pages/GamePage.qml</file>
         <file alias="SettingsPage.qml">assets/Pages/SettingsPage.qml</file>
     </qresource>
     <qresource prefix="/components">
+        <file alias="TopBar.qml">assets/Components/TopBar.qml</file>
+        <file alias="TopBarCell.qml">assets/Components/TopBarCell.qml</file>
+        <file alias="BottomBar.qml">assets/Components/BottomBar.qml</file>
         <file alias="ColorPanel.qml">assets/Components/ColorPanel.qml</file>
-        <file alias="GameButton.qml">assets/Components/GameButton.qml</file>
         <file alias="CommomButton.qml">assets/Components/CommomButton.qml</file>
         <file alias="SettingsSlider.qml">assets/Components/SettingsSlider.qml</file>
         <file alias="SettingsComboBox.qml">assets/Components/SettingsComboBox.qml</file>

@@ -6,10 +6,11 @@ Rectangle {
 
     color:"transparent"
 
-    property string textLabel : "No Text"
+    property alias textLabel : label.text
     property alias textInput : txtInput
 
     Text {
+        id:label
         anchors {
             fill:parent
             bottomMargin: parent.height/2
@@ -23,7 +24,7 @@ Rectangle {
 
         font {
             bold:true
-            pixelSize: height*(0.8)
+            pixelSize: height
         }
     }
 
@@ -46,7 +47,7 @@ Rectangle {
             }
 
             font {
-                pixelSize: height*(0.6)
+                pixelSize: height*(0.8)
             }
 
             verticalAlignment: TextInput.AlignVCenter
@@ -70,12 +71,10 @@ Rectangle {
         }
 
         height: width
-
         radius: height/2
 
         MouseArea {
             anchors.fill: parent
-
             onClicked: colorDialog.open()
         }
     }
