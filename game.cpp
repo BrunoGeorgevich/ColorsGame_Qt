@@ -4,6 +4,7 @@ Game::Game()
 {
     settings = NULL;
     timer = new QTimer(this);
+    _level = 0;
 
     connect(timer, SIGNAL(timeout()),
             this, SLOT(onTimeout()));
@@ -149,6 +150,28 @@ void Game::startTimer(int turn, int total)
 void Game::stopTimer()
 {
     timer->stop();
+}
+
+void Game::setTimerInterval(int interval)
+{
+    if(timer->interval() >= 200)
+    timer->setInterval(interval);
+}
+
+int Game::getTimerInterval()
+{
+    return timer->interval();
+}
+
+int Game::getLevel()
+{
+    return _level;
+}
+
+void Game::setLevel(int l)
+{
+    if(_level < 30)
+        _level = l;
 }
 
 

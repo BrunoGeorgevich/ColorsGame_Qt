@@ -186,12 +186,12 @@ Rectangle {
             columns = 3;
             break;
         case "Médio":
-            rows = 5;
-            columns = 5;
+            rows = 4;
+            columns = 4;
             break;
         case "Difícil":
-            rows = 7;
-            columns = 7;
+            rows = 5;
+            columns = 5;
             break;
         case "Personalizado":
             rows = rowsSettingsSlider.slider.value

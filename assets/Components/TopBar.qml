@@ -9,32 +9,17 @@ Item {
     property alias color : rect.color
     property var content
 
-    states: [
-        State {
-            name: "menu"
-            PropertyChanges {
-                target: topBar
-                color:"#161616"
-                content : menuTopBarComponent
-            }
-        },
-        State {
-            name: "settings"
-            PropertyChanges {
-                target: topBar
-                color:"#2A2"
-                content : settingsTopBarComponent
-            }
-        },
-        State {
-            name: "game"
-            PropertyChanges {
-                target: topBar
-                color:"#09A"
-                content : undefined
-            }
-        }
-    ]
+    function setTime(time) {
+        timeCell.content = time;
+    }
+
+    function incrementScore() {
+        scoreCell.content++;
+    }
+
+    function getScore() {
+        return scoreCell.content;
+    }
 
     Behavior on color {
         ColorAnimation {
@@ -130,11 +115,31 @@ Item {
         }
     }
 
-    function setTime(time) {
-        timeCell.content = time;
-    }
+    states: [
+        State {
+            name: "menu"
+            PropertyChanges {
+                target: topBar
+                color:"#161616"
+                content : menuTopBarComponent
+            }
+        },
+        State {
+            name: "settings"
+            PropertyChanges {
+                target: topBar
+                color:"#2A2"
+                content : settingsTopBarComponent
+            }
+        },
+        State {
+            name: "game"
+            PropertyChanges {
+                target: topBar
+                color:"#09A"
+                content : undefined
+            }
+        }
+    ]
 
-    function incrementScore() {
-        scoreCell.content++;
-    }
 }

@@ -51,21 +51,23 @@ ApplicationWindow {
 
         onCurrentItemChanged : {
 
-            currentItem.isTheCurrentItem();
+            if(currentItem) {
+                currentItem.isTheCurrentItem();
 
-            switch(currentItem.objectName) {
-            case "SettingsPage":
-                bottomBar.state = "settings"
-                topBar.state = "settings"
-                break;
-            case "MenuPage":
-                bottomBar.state = "menu"
-                topBar.state = "menu"
-                break;
-            case "GamePage":
-                bottomBar.state = "game"
-                topBar.state = "game"
-                break;
+                switch(currentItem.objectName) {
+                case "SettingsPage":
+                    bottomBar.state = "settings"
+                    topBar.state = "settings"
+                    break;
+                case "MenuPage":
+                    bottomBar.state = "menu"
+                    topBar.state = "menu"
+                    break;
+                case "GamePage":
+                    bottomBar.state = "game"
+                    topBar.state = "game"
+                    break;
+                }
             }
         }
 

@@ -39,7 +39,7 @@ Rectangle {
         stepSize: 1
 
         minimumValue: 2
-        maximumValue: 7
+        maximumValue: 5
     }
 
 }

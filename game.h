@@ -32,6 +32,12 @@ public:
     Q_INVOKABLE void startTimer(int turn, int total);
     Q_INVOKABLE void stopTimer();
 
+    Q_INVOKABLE void setTimerInterval(int interval);
+    Q_INVOKABLE int getTimerInterval();
+
+    Q_INVOKABLE int getLevel();
+    Q_INVOKABLE void setLevel(int l);
+
 signals:
 
     void rightAnswered();
@@ -53,6 +59,7 @@ private:
     QTimer *timer;
 
     int _time;
+    int _level;
 
 };
 
