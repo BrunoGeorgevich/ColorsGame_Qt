@@ -29,14 +29,19 @@ Rectangle {
 
     function refreshGame() {
 
+        if(topBar.getScore() == 0) {
+            _game.startTimer(800, 60);
+            levelRect.state = "show"
+        }
+
         topBar.incrementScore();
         setLevel(topBar.getScore())
 
         if(topBar.getScore())
 
-        for(var i = 0; i < settings['columns']; i++) {
-            buttonsGridModel.remove(buttonsGridModel.count - 1);
-        }
+            for(var i = 0; i < settings['columns']; i++) {
+                buttonsGridModel.remove(buttonsGridModel.count - 1);
+            }
 
         var line = _game.getLines()[0];
         var btns = line.getButtons();
@@ -58,8 +63,9 @@ Rectangle {
         if(score >= (lvl*lvl)) {
 
             _game.setLevel(lvl + 1);
-            _game.setTimerInterval(inteval - 20);
+            _game.setTimerInterval(inteval - 30);
 
+            levelText.text = "Nível " + (lvl + 1);
             console.log("LEVEL " + (lvl + 1) + "!");
         }
     }
@@ -69,7 +75,6 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        _game.startTimer(220, 60);
         _game.generateButtons();
         addLines(_game.getLines());
     }
@@ -98,15 +103,19 @@ Rectangle {
         id:buttonsGrid
 
         anchors {
-            fill:parent
+            top:parent.top
+            left:parent.left
+            right:parent.right
+            bottom:parent.bottom
             margins:parent.height*(0.05)
+            bottomMargin: parent.height*0.2
         }
 
         cellWidth: width/settings['columns'];
-        cellHeight:height/(settings['rows']*1.2);
+        cellHeight:height/settings['rows'];
 
         add : Transition {
-            PropertyAnimation { prope800rty:"scale"; from:0; to:1; duration:50; }
+            PropertyAnimation { property:"scale"; from:0; to:1; duration:50; }
         }
 
         model: ListModel {  id:buttonsGridModel  }
@@ -128,6 +137,71 @@ Rectangle {
             }
         }
     }
+
+    Rectangle {
+        id:levelRect
+
+        state : "hide"
+        color:"#09A"
+
+        anchors {
+            left:parent.left
+            right: parent.right
+            bottom:parent.bottom
+        }
+
+        height:parent.height*0.2
+
+        Text {
+            id:levelText
+            visible:false
+            anchors.fill: parent
+
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+
+            font {
+                bold:true
+                pixelSize: height/2
+            }
+
+            color:"white"
+
+            text:"Nível 0"
+        }
+
+        states : [
+            State {
+                name: "hide"
+                AnchorChanges {
+                    target: levelRect
+                    anchors.top : parent.bottom
+                }
+            }, State {
+                name: "show"
+                AnchorChanges {
+                    target: levelRect
+                    anchors.top : buttonsGrid.bottom
+                }
+                PropertyChanges {
+                    target: levelText
+                    visible:true
+                }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                from: "hide"
+                to: "show"
+                AnchorAnimation {
+                    duration: 800
+                    easing.type: "OutElastic"
+                }
+            }
+        ]
+    }
+
     Component {
         id:bottomBarContentComponent
 

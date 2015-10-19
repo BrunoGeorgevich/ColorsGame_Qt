@@ -170,7 +170,7 @@ int Game::getLevel()
 
 void Game::setLevel(int l)
 {
-    if(_level < 30)
+    if(_level < 20)
         _level = l;
 }
 
