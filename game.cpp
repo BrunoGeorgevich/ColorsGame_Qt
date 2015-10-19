@@ -154,7 +154,7 @@ void Game::stopTimer()
 
 void Game::setTimerInterval(int interval)
 {
-    if(timer->interval() >= 200)
+    if(timer->interval() >= 150)
     timer->setInterval(interval);
 }
 
@@ -170,7 +170,7 @@ int Game::getLevel()
 
 void Game::setLevel(int l)
 {
-    if(_level < 20)
+    if(_level < 15)
         _level = l;
 }
 

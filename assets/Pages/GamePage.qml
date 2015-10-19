@@ -30,7 +30,7 @@ Rectangle {
     function refreshGame() {
 
         if(topBar.getScore() == 0) {
-            _game.startTimer(800, 60);
+            _game.startTimer(600, 60);
             levelRect.state = "show"
         }
 
@@ -65,8 +65,7 @@ Rectangle {
             _game.setLevel(lvl + 1);
             _game.setTimerInterval(inteval - 30);
 
-            levelText.text = "Nível " + (lvl + 1);
-            console.log("LEVEL " + (lvl + 1) + "!");
+            levelText.text = "Nível " + lvl;
         }
     }
 
@@ -76,6 +75,9 @@ Rectangle {
 
     Component.onCompleted: {
         _game.generateButtons();
+        _game.startTimer(600,60);
+        _game.stopTimer();
+        _game.setLevel(0);
         addLines(_game.getLines());
     }
 
