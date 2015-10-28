@@ -1,14 +1,17 @@
 #include <QQmlApplicationEngine>
 #include <QApplication>
 #include <QQmlContext>
+#include <QtQml>
 
-#include "game.h"
+#include "components/structure/game.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
     Game *game = new Game();
+
+    qmlRegisterType<Line>("line",1,0,"Line");
 
     QQmlApplicationEngine engine;
     QQmlContext *ctx = engine.rootContext();

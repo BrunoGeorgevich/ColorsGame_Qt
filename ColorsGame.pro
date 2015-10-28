@@ -13,20 +13,25 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
-    line.cpp \
-    rightbutton.cpp \
-    commonbutton.cpp \
-    game.cpp \
-    settings.cpp
+SOURCES +=                                      \
+    main.cpp                                    \
+    components/structure/line.cpp               \
+    components/structure/game.cpp               \
+    components/structure/settings.cpp           \
+    components/buttons/rightbutton.cpp          \
+    components/buttons/commonbutton.cpp         \
+    components/external/qqmlobjectlistmodel.cpp \
+    components/external/qqmlhelpers.cpp
 
-HEADERS += \
-    line.h \
-    button.h \
-    rightbutton.h \
-    commonbutton.h \
-    game.h \
-    settings.h
+HEADERS +=                                      \
+    components/structure/line.h                 \
+    components/structure/game.h                 \
+    components/structure/settings.h             \
+    components/buttons/button.h                 \
+    components/buttons/rightbutton.h            \
+    components/buttons/commonbutton.h           \
+    components/external/qqmlobjectlistmodel.h   \
+    components/external/qqmlhelpers.h
 
 RESOURCES += \
     qml.qrc

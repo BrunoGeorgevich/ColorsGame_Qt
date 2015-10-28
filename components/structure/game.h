@@ -8,9 +8,13 @@
 #include "settings.h"
 #include "line.h"
 
+//External Libs
+#include "components/external/qqmlobjectlistmodel.h"
+
 class Game : public QObject
 {
     Q_OBJECT
+
 public:
 
     Game();
@@ -18,7 +22,7 @@ public:
     void printStructure();
 
     Q_INVOKABLE bool generateButtons();
-    Q_INVOKABLE QList<QObject *> getLines();
+    Q_INVOKABLE QObject *getLines();
 
     Q_INVOKABLE QObject *getSettings() const;
     Q_INVOKABLE void setSettings(int rows,
@@ -50,7 +54,7 @@ public slots:
 
 private:
 
-    QList<QObject *> _lines;
+    QQmlObjectListModel<Line> *_lines;
 
     void rightAnswer();
     void wrongAnswer();

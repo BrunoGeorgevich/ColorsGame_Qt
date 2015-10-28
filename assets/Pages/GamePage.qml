@@ -2,30 +2,31 @@ import QtQuick 2.0
 import QtQuick.Controls 1.2
 
 import "qrc:/components/"
+import line 1.0
 
 Rectangle {
 
     signal isTheCurrentItem;
 
-    function addLines(l) {
+    //    function addLines(l) {
 
-        var lines = l;
+    //        var lines = l;
 
-        if(buttonsGridModel.count != 0)
-            buttonsGridModel.clear();
+    //        if(buttonsGridModel.count != 0)
+    //            buttonsGridModel.clear();
 
-        lines.forEach(function(line){
-            var btns = line.getButtons();
+    //        lines.forEach(function(line){
+    //            var btns = line.getButtons();
 
-            btns.forEach(function(btn) {
+    //            btns.forEach(function(btn) {
 
-                buttonsGridModel.append({
-                                            btn:btn,
-                                            line:line
-                                        });
-            });
-        });
-    }
+    //                buttonsGridModel.append({
+    //                                            btn:btn,
+    //                                            line:line
+    //                                        });
+    //            });
+    //        });
+    //    }
 
     function refreshGame() {
 
@@ -36,23 +37,6 @@ Rectangle {
 
         topBar.incrementScore();
         setLevel(topBar.getScore())
-
-        if(topBar.getScore())
-
-            for(var i = 0; i < settings['columns']; i++) {
-                buttonsGridModel.remove(buttonsGridModel.count - 1);
-            }
-
-        var line = _game.getLines()[0];
-        var btns = line.getButtons();
-
-        btns.forEach(function(btn) {
-
-            buttonsGridModel.insert(0, {
-                                        btn:btn,
-                                        line:line
-                                    });
-        });
     }
 
     function setLevel(score) {
@@ -78,7 +62,7 @@ Rectangle {
         _game.startTimer(600,60);
         _game.stopTimer();
         _game.setLevel(0);
-        addLines(_game.getLines());
+        //        addLines(_game.getLines());
     }
 
     objectName: "GamePage"
@@ -101,8 +85,8 @@ Rectangle {
         }
     }
 
-    GridView {
-        id:buttonsGrid
+    Column {
+        id:linesColumn
 
         anchors {
             top:parent.top
@@ -113,32 +97,90 @@ Rectangle {
             bottomMargin: parent.height*0.2
         }
 
-        cellWidth: width/settings['columns'];
-        cellHeight:height/settings['rows'];
+        spacing: 10
+        clip: true
 
         add : Transition {
-            PropertyAnimation { property:"scale"; from:0; to:1; duration:50; }
+            PropertyAnimation { property:"scale"; from:0; to:1; duration:100; easing.type: "OutElastic"}
         }
 
-        model: ListModel {  id:buttonsGridModel  }
-        delegate: Rectangle {
 
-            width:buttonsGrid.cellWidth*(0.9)
-            height:buttonsGrid.cellHeight*(0.9)
+        Repeater {
+            id:linesRepeater
+            model:_game.getLines()
+            delegate: Row {
+                id:buttonsRow
+                height: (linesColumn.height/linesRepeater.count) - linesColumn.spacing
+                width: linesColumn.width
+                spacing: 10
+                Component.onCompleted: console.log(_game.getLines().get(index))
+                Repeater {
+                    id:buttonsRepeater
+                    model:line.getButtons()
+                    delegate: Rectangle {
+                        width:(buttonsRow.width/buttonsRepeater.count) - buttonsRow.spacing
+                        height:buttonsRow.height
+                        color: (status) ? settings['primaryColor'] :
+                                          settings['secondaryColor'];
+                        radius:10
+                        MouseArea {
+                            anchors.fill: parent
 
-            radius:10
-
-            color:(btn.getStatus()) ? settings['primaryColor'] :
-                                      settings['secondaryColor'];
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: {
-                    btn.run();
+                            onClicked: {
+                                btn.run()
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+
+    Component {
+        id:lineComponent
+        Line {
+
+        }
+    }
+
+    //    GridView {
+    //        id:buttonsGrid
+
+    //        anchors {
+    //            top:parent.top
+    //            left:parent.left
+    //            right:parent.right
+    //            bottom:parent.bottom
+    //            margins:parent.height*(0.05)
+    //            bottomMargin: parent.height*0.2
+    //        }
+
+    //        cellWidth: width/settings['columns'];
+    //        cellHeight:height/settings['rows'];
+
+    //        add : Transition {
+    //            PropertyAnimation { property:"scale"; from:0; to:1; duration:50; }
+    //        }
+
+    //        model: ListModel {  id:buttonsGridModel  }
+    //        delegate: Rectangle {
+
+    //            width:buttonsGrid.cellWidth*(0.9)
+    //            height:buttonsGrid.cellHeight*(0.9)
+
+    //            radius:10
+
+    //            color:(btn.getStatus()) ? settings['primaryColor'] :
+    //                                      settings['secondaryColor'];
+    //            MouseArea {
+    //                anchors.fill: parent
+
+    //                onClicked: {
+    //                    btn.run();
+    //                }
+    //            }
+    //        }
+    //    }
 
     Rectangle {
         id:levelRect
@@ -183,7 +225,7 @@ Rectangle {
                 name: "show"
                 AnchorChanges {
                     target: levelRect
-                    anchors.top : buttonsGrid.bottom
+                    anchors.top : linesColumn.bottom
                 }
                 PropertyChanges {
                     target: levelText

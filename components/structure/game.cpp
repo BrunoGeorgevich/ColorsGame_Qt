@@ -6,6 +6,8 @@ Game::Game()
     timer = new QTimer(this);
     _level = 0;
 
+    _lines = new QQmlObjectListModel<Line>(this);
+
     connect(timer, SIGNAL(timeout()),
             this, SLOT(onTimeout()));
 
@@ -21,8 +23,8 @@ bool Game::generateButtons()
 
     Settings *s = (Settings *)settings;
 
-    if(!_lines.isEmpty())
-        _lines.clear();
+    if(!_lines->isEmpty())
+        _lines->clear();
 
     int index = 0;
     int prevIndex = 0;
@@ -41,7 +43,7 @@ bool Game::generateButtons()
         connect(l, SIGNAL(aButtonWasClicked(bool)),
                 this, SLOT(lineWasClicked(bool)));
 
-        _lines.append(l);
+        _lines->append(l);
 
         prevIndex = index;
     }
@@ -51,30 +53,31 @@ bool Game::generateButtons()
 
 void Game::printStructure()
 {
-    if(_lines.isEmpty())
+    if(_lines->isEmpty())
         generateButtons();
 
-    foreach (QObject *o, _lines) {
-
-        Line *l = (Line *)o;
+    for(int i = 0; i < _lines->size(); i++) {
 
         QString line = "";
 
-        foreach (QObject *ob, l->getButtons()) {
+        QQmlObjectListModel<Button> *btns =
+                (QQmlObjectListModel<Button> *)_lines->at(i)->getButtons();
 
-            Button *b = (Button *)ob;
+        for(int j = 0; j < btns->size(); j++) {
 
-            if(b->getStatus())
+            Button *b = btns->at(j);
+
+            if(b->get_status())
                line.append("1 ");
             else
-                line.append("0 ");
+               line.append("0 ");
         }
 
         qDebug() << line;
     }
 }
 
-QList<QObject *> Game::getLines()
+QObject *Game::getLines()
 {
     return _lines;
 }
@@ -96,7 +99,7 @@ void Game::onTimeout()
 
 void Game::rightAnswer()
 {
-    _lines.removeLast();
+    _lines->remove(_lines->size() - 1);
     _time++;
 
     Settings *s = (Settings *)settings;
@@ -108,10 +111,10 @@ void Game::rightAnswer()
     connect(nLine, SIGNAL(aButtonWasClicked(bool)),
                     this, SLOT(lineWasClicked(bool)));
 
-    _lines.insert(0, nLine);
+    _lines->insert(0, nLine);
 
-    Line *last = (Line *)_lines.last();
-    last->setFirst(true);
+    Line *last = (Line *)_lines->last();
+    last->set_isFirst(true);
 
     //qDebug() << _lines;
 
