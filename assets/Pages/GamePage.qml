@@ -8,26 +8,6 @@ Rectangle {
 
     signal isTheCurrentItem;
 
-    //    function addLines(l) {
-
-    //        var lines = l;
-
-    //        if(buttonsGridModel.count != 0)
-    //            buttonsGridModel.clear();
-
-    //        lines.forEach(function(line){
-    //            var btns = line.getButtons();
-
-    //            btns.forEach(function(btn) {
-
-    //                buttonsGridModel.append({
-    //                                            btn:btn,
-    //                                            line:line
-    //                                        });
-    //            });
-    //        });
-    //    }
-
     function refreshGame() {
 
         if(topBar.getScore() == 0) {
@@ -62,7 +42,6 @@ Rectangle {
         _game.startTimer(600,60);
         _game.stopTimer();
         _game.setLevel(0);
-        //        addLines(_game.getLines());
     }
 
     objectName: "GamePage"
@@ -143,45 +122,6 @@ Rectangle {
         }
     }
 
-    //    GridView {
-    //        id:buttonsGrid
-
-    //        anchors {
-    //            top:parent.top
-    //            left:parent.left
-    //            right:parent.right
-    //            bottom:parent.bottom
-    //            margins:parent.height*(0.05)
-    //            bottomMargin: parent.height*0.2
-    //        }
-
-    //        cellWidth: width/settings['columns'];
-    //        cellHeight:height/settings['rows'];
-
-    //        add : Transition {
-    //            PropertyAnimation { property:"scale"; from:0; to:1; duration:50; }
-    //        }
-
-    //        model: ListModel {  id:buttonsGridModel  }
-    //        delegate: Rectangle {
-
-    //            width:buttonsGrid.cellWidth*(0.9)
-    //            height:buttonsGrid.cellHeight*(0.9)
-
-    //            radius:10
-
-    //            color:(btn.getStatus()) ? settings['primaryColor'] :
-    //                                      settings['secondaryColor'];
-    //            MouseArea {
-    //                anchors.fill: parent
-
-    //                onClicked: {
-    //                    btn.run();
-    //                }
-    //            }
-    //        }
-    //    }
-
     Rectangle {
         id:levelRect
 
@@ -257,7 +197,7 @@ Rectangle {
                     bottom:parent.bottom
 
                     margins: (parent.width < parent.height) ?
-                                 parent.width*(0.3) : parent.height*(0.3)
+                                 parent.width*(0.2) : parent.height*(0.2)
                 }
 
                 source: "qrc:/images/back-arrow.png"

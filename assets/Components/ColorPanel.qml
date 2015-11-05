@@ -8,6 +8,7 @@ Rectangle {
 
     property alias textLabel : label.text
     property alias textInput : txtInput
+    property alias mouse : mouseArea
 
     Text {
         id:label
@@ -74,17 +75,8 @@ Rectangle {
         radius: height/2
 
         MouseArea {
+            id:mouseArea
             anchors.fill: parent
-            onClicked: colorDialog.open()
-        }
-    }
-
-    ColorDialog {
-        id:colorDialog
-
-        onAccepted: {
-            txtInput.text  = colorDialog.currentColor
-            colorCircle.color = colorDialog.currentColor
         }
     }
 }

@@ -14,7 +14,7 @@ Rectangle {
     }
 
     CommomButton {
-        id:playBtn        
+        id:playBtn
 
         anchors {
             top:parent.top

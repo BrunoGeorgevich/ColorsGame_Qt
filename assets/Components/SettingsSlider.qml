@@ -5,6 +5,8 @@ Rectangle {
 
     property string textLabel : "No text"
     property alias  slider : _slider
+    property alias minValue : _slider.minimumValue
+    property alias maxValue : _slider.maximumValue
 
     color:"transparent"
 

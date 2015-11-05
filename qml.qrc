@@ -18,5 +18,6 @@
         <file alias="CommomButton.qml">assets/Components/CommomButton.qml</file>
         <file alias="SettingsSlider.qml">assets/Components/SettingsSlider.qml</file>
         <file alias="SettingsComboBox.qml">assets/Components/SettingsComboBox.qml</file>
+        <file alias="ColorDialogBox.qml">assets/Components/ColorDialogBox.qml</file>
     </qresource>
 </RCC>
