@@ -19,10 +19,7 @@ Rectangle {
         }
         width:parent.width*(0.6); height: parent.height/5
         buttonText: "Jogar"; buttonColor: "#09A"
-        mouseArea.onClicked: {
-            if(!_game.isSettingsEmpty()) stackPages.push(gamePageComponent);
-            else stackPages.push(settingsPageComponent);
-        }
+        mouseArea.onClicked: stackPages.push(gamePageComponent);
     }
     CommomButton {
         id:settingsBtn

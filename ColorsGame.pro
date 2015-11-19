@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core widgets quick qml
+QT       += core widgets quick qml svg sql
 
 TARGET = ColorsGame
 CONFIG   += console
@@ -21,7 +21,8 @@ SOURCES +=                                      \
     components/buttons/rightbutton.cpp          \
     components/buttons/commonbutton.cpp         \
     components/external/qqmlobjectlistmodel.cpp \
-    components/external/qqmlhelpers.cpp
+    components/external/qqmlhelpers.cpp         \
+    components/external/database.cpp
 
 HEADERS +=                                      \
     components/structure/line.h                 \
@@ -31,7 +32,8 @@ HEADERS +=                                      \
     components/buttons/rightbutton.h            \
     components/buttons/commonbutton.h           \
     components/external/qqmlobjectlistmodel.h   \
-    components/external/qqmlhelpers.h
+    components/external/qqmlhelpers.h           \
+    components/external/database.h
 
 RESOURCES += \
     qml.qrc

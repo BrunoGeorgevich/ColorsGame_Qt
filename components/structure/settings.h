@@ -12,8 +12,8 @@ class Settings : public QObject
     QML_WRITABLE_PROPERTY(QByteArray, primaryColor)
     QML_WRITABLE_PROPERTY(QByteArray, secondaryColor)
     QML_WRITABLE_PROPERTY(QByteArray, difficulty)
-    QML_WRITABLE_PROPERTY(int, numOfRows)
-    QML_WRITABLE_PROPERTY(int, numOfColumns)
+    QML_WRITABLE_PROPERTY(int, rows)
+    QML_WRITABLE_PROPERTY(int, columns)
 public:
     Settings();
     Settings(int rows,

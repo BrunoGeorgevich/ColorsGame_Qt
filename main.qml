@@ -6,9 +6,10 @@ import "qrc:/pages"
 
 ApplicationWindow {
     id:root
-    property var settings : []
+    property var settings : _game.settings
     property alias bottomBar : bottomBar
     property alias topBar : topBar
+    property int userRecord : _game.record
     title:"Color's Game"; visible: true
     height:600; width:400
     TopBar {

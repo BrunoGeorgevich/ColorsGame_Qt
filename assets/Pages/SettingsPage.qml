@@ -40,14 +40,13 @@ Rectangle {
         bottomBar.content = bottomBarContentComponent.createObject()
     }
     Component.onCompleted : {
-        if(!_game.isSettingsEmpty()) {
+            console.log(settings['primaryColor'])
             primaryColorPanel.textInput.text = settings['primaryColor'];
             secondaryColorPanel.textInput.text = settings['secondaryColor'];
             difficultyComboBox.comboBox.currentIndex =
                     difficultyComboBox.comboBoxModel.indexOf(settings['difficulty']);
             columnsSettingsSlider.slider.value = settings['columns'];
             rowsSettingsSlider.slider.value = settings['rows'];
-        }
     }
     Column {
         anchors{

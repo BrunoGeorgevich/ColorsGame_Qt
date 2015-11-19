@@ -13,6 +13,7 @@ Rectangle {
             levelRect.state = "show"
         }
         topBarContent.incrementScore();
+        topBarContent.updateRecord();
         setLevel(topBarContent.getScore())
     }
     function setLevel(score) {
@@ -37,6 +38,14 @@ Rectangle {
     }
     objectName: "GamePage"
     color:"transparent"
+    Timer {
+        interval:5000
+        repeat: true
+        running: true
+        onTriggered: {
+            _game.updateRecord(userRecord)
+        }
+    }
     Connections {
         target:_game
         onRightAnswered:{ refreshGame(); }
@@ -66,7 +75,6 @@ Rectangle {
                 id:buttonsRow
                 height: (linesColumn.height/linesRepeater.count) - linesColumn.spacing
                 width: linesColumn.width; spacing: 10
-                Component.onCompleted: console.log(_game.lines.get(index))
                 Repeater {
                     id:buttonsRepeater
                     model:line.getButtons()
@@ -141,7 +149,13 @@ Rectangle {
             id:gameTopBarItem
             function setTime(time) { timeCell.content = time; }
             function incrementScore() { scoreCell.content++; }
+            function setRecord(v) { recordCell.content = v }
             function getScore() { return scoreCell.content; }
+            function getRecord() { return recordCell.content; }
+            function updateRecord() {
+                if(userRecord <= scoreCell.content)
+                    userRecord = scoreCell.content
+            }
             anchors.fill:parent
             Row {
                 anchors.fill:parent
@@ -155,7 +169,7 @@ Rectangle {
                 }
                 TopBarCell {
                     id:recordCell
-                    label:"Record"; content:"0"
+                    label:"Record"; content:userRecord
                 }
                 onVisibleChanged: {
                     scoreCell.content = 0; recordCell.content = 0; timeCell.content = 60
