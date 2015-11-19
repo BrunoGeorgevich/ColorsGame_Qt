@@ -12,31 +12,21 @@
 class Line : public QObject
 {
     Q_OBJECT
-
     QML_WRITABLE_PROPERTY(int,columns)
     QML_WRITABLE_PROPERTY(int,rightBtnIndex)
     QML_WRITABLE_PROPERTY(bool,isFirst)
-    QML_WRITABLE_PROPERTY(Line *,line)
-
+    QML_WRITABLE_PROPERTY(Line *, line)
 public:
-
     Line();
     Line(int numOfColumns, int rightBtnIndex, bool status);
-
-    Q_INVOKABLE
-    QObject *getButtons();
-
+    Q_INVOKABLE QObject *getButtons();
 public slots:
-
     void buttonClicked(bool isRight);
-
 signals:
-
     void aButtonWasClicked(bool);
-
 private:
-    QQmlObjectListModel<Button> *m_buttons;
     void generateButtons();
+    QQmlObjectListModel<Button> *m_buttons;
 };
 
 #endif // LINE_H

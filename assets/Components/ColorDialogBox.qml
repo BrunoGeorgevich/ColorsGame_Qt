@@ -4,20 +4,10 @@ import QtGraphicalEffects 1.0
 
 Item {
     id:colorDialogBoxRoot
-
     property alias okBtn : okButton
     property string color
-
-    state:"closed"
-    anchors.fill : parent
-    opacity: 0
-
-    function open() {
-        state = "open"
-    }
-    function closed() {
-        state = "closed"
-    }
+    function open() { state = "open" }
+    function closed() { state = "closed" }
     function componentToHex(c) {
         var hex = c.toString(16);
         return hex.length == 1 ? "0" + hex : hex;
@@ -28,17 +18,16 @@ Item {
     function getColor() {
         return rgbToHex(rSlider.slider.value,gSlider.slider.value,bSlider.slider.value);
     }
-
+    state:"closed"
+    anchors.fill : parent
+    opacity: 0
     Rectangle {
         id:backgroundRect
         anchors.fill: parent
         opacity:0
         color:"black"
-        Behavior on opacity {
-            NumberAnimation { duration:200 }
-        }
+        Behavior on opacity { NumberAnimation { duration:200 } }
     }
-
     DropShadow {
         id:dropShadow
         anchors.fill: colorDialogBox
@@ -49,23 +38,16 @@ Item {
         color: "#00000000"
         source: colorDialogBox
         transparentBorder: true
-        Behavior on color {
-            ColorAnimation { duration: 200 }
-        }
+        Behavior on color { ColorAnimation { duration: 200 } }
     }
-
     Rectangle {
         id:colorDialogBox
         width:parent.width*(0.8)
         height:width
         anchors.verticalCenter: parent.verticalCenter
         color:"#DDD"
-
         Column {
-            anchors {
-                fill: parent
-                margins: parent.width*(0.03)
-            }
+            anchors { fill: parent; margins: parent.width*(0.03) }
             spacing: parent.width*(0.02)
             SettingsSlider {
                 id:rSlider
@@ -111,9 +93,7 @@ Item {
                     width:parent.width/3
                     height:parent.height/2
                     anchors.verticalCenter: parent.verticalCenter
-                    onClicked: {
-                        closed()
-                    }
+                    onClicked: closed()
                 }
                 Button {
                     id:okButton
@@ -129,30 +109,22 @@ Item {
     states: [
         State {
             name: "open"
-            PropertyChanges {
-                target:colorDialogBoxRoot
-                visible:true
-            }
+            PropertyChanges { target:colorDialogBoxRoot; visible:true }
             AnchorChanges {
-                target: colorDialogBox
-                anchors.right : undefined
-                anchors.horizontalCenter: parent.horizontalCenter
+                target: colorDialogBox; anchors.right : undefined; anchors.horizontalCenter: parent.horizontalCenter
             }
         },
         State {
             name: "closed"
             AnchorChanges {
-                target: colorDialogBox
-                anchors.right : parent.left
-                anchors.horizontalCenter: undefined
+                target: colorDialogBox; anchors.right : parent.left; anchors.horizontalCenter: undefined
             }
         }
     ]
 
     transitions: [
         Transition {
-            from: "closed"
-            to: "open"
+            from: "closed"; to: "open"
             SequentialAnimation {
                 ScriptAction {
                     script: {
@@ -161,9 +133,7 @@ Item {
                         colorDialogBoxRoot.opacity = 1
                     }
                 }
-                AnchorAnimation {
-                    duration: 200
-                }
+                AnchorAnimation { duration: 200 }
                 ScriptAction {
                     script: {
                         backgroundRect.opacity = 0.6
@@ -173,8 +143,7 @@ Item {
             }
         },
         Transition {
-            from: "open"
-            to: "closed"
+            from: "open"; to: "closed"
             SequentialAnimation {
                 ScriptAction {
                     script: {
@@ -182,9 +151,7 @@ Item {
                         backgroundRect.opacity = 0
                     }
                 }
-                AnchorAnimation {
-                    duration: 200
-                }
+                AnchorAnimation { duration: 200 }
                 ScriptAction {
                     script: {
                         rSlider.slider.value = 0

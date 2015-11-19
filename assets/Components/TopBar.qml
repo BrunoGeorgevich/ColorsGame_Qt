@@ -5,28 +5,8 @@ import QtGraphicalEffects 1.0
 import "qrc:/components"
 
 Item {
-
     property alias color : rect.color
-    property var content
-
-    function setTime(time) {
-        timeCell.content = time;
-    }
-
-    function incrementScore() {
-        scoreCell.content++;
-    }
-
-    function getScore() {
-        return scoreCell.content;
-    }
-
-    Behavior on color {
-        ColorAnimation {
-            duration:200
-        }
-    }
-
+    property alias content : rect.children
     DropShadow {
         anchors.fill: rect
         horizontalOffset: parent.width*(0.01)
@@ -37,109 +17,28 @@ Item {
         source: rect
         transparentBorder: true
     }
-
     Rectangle {
         id:rect
-        anchors.fill: parent
-        anchors.bottomMargin: 4
-
-        Loader {
-            anchors.fill: parent
-            sourceComponent: content
-        }
-
-
-        Item {
-            id:gameTopBarItem
-            visible:content?false:true;
-
-            anchors.fill:parent
-
-            Row {
-                anchors.fill:parent
-
-                TopBarCell {
-                    id:timeCell
-                    label:"Tempo"
-                    content:"00:00"
-                }
-                TopBarCell {
-                    id:scoreCell
-                    label:"Placar"
-                    content:"0"
-                }
-                TopBarCell {
-                    id:recordCell
-                    label:"Record"
-                    content:"0"
-                }
-
-                onVisibleChanged: {
-                    scoreCell.content = 0
-                    recordCell.content = 0
-                    timeCell.content = 60
-                }
-            }
-        }
+        anchors{ fill: parent; bottomMargin: 4 }
     }
-
-    Component {
-        id:menuTopBarComponent
-        Text {
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-
-            text:"Menu"
-            color:"White"
-
-            font {
-                bold:true
-                pixelSize: height/2
-            }
-        }
-    }
-
-    Component {
-        id:settingsTopBarComponent
-        Text {
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-
-            text:"Ajustes"
-            color:"White"
-
-            font {
-                bold:true
-                pixelSize: height/2
-            }
-        }
-    }
-
     states: [
         State {
             name: "menu"
-            PropertyChanges {
-                target: topBar
-                color:"#161616"
-                content : menuTopBarComponent
-            }
+            PropertyChanges { target: topBar; color:"#161616" }
         },
         State {
             name: "settings"
-            PropertyChanges {
-                target: topBar
-                color:"#2A2"
-                content : settingsTopBarComponent
-            }
+            PropertyChanges { target: topBar; color:"#2A2" }
         },
         State {
             name: "game"
-            PropertyChanges {
-                target: topBar
-                color:"#09A"
-                content : undefined
-            }
+            PropertyChanges { target: topBar; color:"#09A" }
         }
     ]
-
+    transitions: [
+        Transition {
+            from: "*"; to: "*"
+            ColorAnimation { duration:200 }
+        }
+    ]
 }

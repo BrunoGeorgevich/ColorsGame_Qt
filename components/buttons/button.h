@@ -12,10 +12,8 @@ class Button : public QObject
     QML_WRITABLE_PROPERTY(bool,status)
     QML_WRITABLE_PROPERTY(Button *,btn)
 public:
-
     Q_INVOKABLE
     virtual void run() = 0;
-
 signals:
     void clicked(bool);
 };
