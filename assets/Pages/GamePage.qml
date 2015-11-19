@@ -16,7 +16,7 @@ Rectangle {
         setLevel(topBarContent.getScore())
     }
     function setLevel(score) {
-        var lvl = _game.getLevel();
+        var lvl = _game.level;
         var inteval = _game.getTimerInterval();
         if(score >= (lvl*lvl)) {
             _game.setLevel(lvl + 1);
@@ -61,12 +61,12 @@ Rectangle {
         }
         Repeater {
             id:linesRepeater
-            model:_game.getLines()
+            model:_game.lines
             delegate: Row {
                 id:buttonsRow
                 height: (linesColumn.height/linesRepeater.count) - linesColumn.spacing
                 width: linesColumn.width; spacing: 10
-                Component.onCompleted: console.log(_game.getLines().get(index))
+                Component.onCompleted: console.log(_game.lines.get(index))
                 Repeater {
                     id:buttonsRepeater
                     model:line.getButtons()

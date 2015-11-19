@@ -14,12 +14,15 @@
 class Game : public QObject
 {
     Q_OBJECT
+    QML_OBJMODEL_PROPERTY(Line, lines)
+    QML_WRITABLE_PROPERTY(Settings *, settings)
+    QML_WRITABLE_PROPERTY(QTimer *, timer)
+    QML_WRITABLE_PROPERTY(int, time)
+    QML_WRITABLE_PROPERTY(int, level)
 public:
     Game();
     void printStructure();
     Q_INVOKABLE bool generateButtons();
-    Q_INVOKABLE QObject *getLines();
-    Q_INVOKABLE QObject *getSettings() const;
     Q_INVOKABLE void setSettings(int rows,
                      int columns,
                      QByteArray difficulty,
@@ -30,7 +33,6 @@ public:
     Q_INVOKABLE void stopTimer();
     Q_INVOKABLE void setTimerInterval(int interval);
     Q_INVOKABLE int getTimerInterval();
-    Q_INVOKABLE int getLevel();
     Q_INVOKABLE void setLevel(int l);
 signals:
     void rightAnswered();
@@ -41,11 +43,6 @@ public slots:
 private:
     void rightAnswer();
     void wrongAnswer();
-    QQmlObjectListModel<Line> *_lines;
-    QObject *settings;
-    QTimer *timer;
-    int _time;
-    int _level;
 };
 
 #endif // GAME_H

@@ -7,7 +7,6 @@ class CommonButton : public Button
 {
 public:
     CommonButton();
-    void run();
 };
 
 #endif // COMMONBUTTON_H
