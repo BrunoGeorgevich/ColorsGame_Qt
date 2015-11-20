@@ -23,7 +23,9 @@ SOURCES +=                                      \
     components/external/qqmlobjectlistmodel.cpp \
     components/external/qqmlhelpers.cpp         \
     components/external/database.cpp \
-    components/patterns/factory/buttonfactory.cpp
+    components/patterns/factory/buttonfactory.cpp \
+    components/patterns/states/ingamestate.cpp \
+    components/patterns/states/stopedgamestate.cpp
 
 HEADERS +=                                      \
     components/structure/line.h                 \
@@ -35,7 +37,10 @@ HEADERS +=                                      \
     components/external/qqmlobjectlistmodel.h   \
     components/external/qqmlhelpers.h           \
     components/external/database.h \
-    components/patterns/factory/buttonfactory.h
+    components/patterns/factory/buttonfactory.h \
+    components/patterns/states/state.h \
+    components/patterns/states/ingamestate.h \
+    components/patterns/states/stopedgamestate.h
 
 RESOURCES += \
     qml.qrc \

@@ -8,6 +8,8 @@
 //Custom Libs
 #include "settings.h"
 #include "line.h"
+#include "components/patterns/states/stopedgamestate.h"
+#include "components/patterns/states/ingamestate.h"
 
 //External Libs
 #include "components/external/qqmlobjectlistmodel.h"
@@ -23,6 +25,7 @@ class Game : public QObject
     QML_WRITABLE_PROPERTY(int, level)
     QML_READONLY_PROPERTY(Database *, db)
     QML_WRITABLE_PROPERTY(int, record)
+    QML_READONLY_PROPERTY(State *,state)
 public:
     static Game *getInstance();
     void printStructure();
@@ -40,6 +43,8 @@ public:
     Q_INVOKABLE void resetLevel();
     Q_INVOKABLE void setLevel(int l);
     Q_INVOKABLE void updateRecord(int v);
+    Q_INVOKABLE void run();
+    void installState(State *state);
     void rightAnswer();
     void wrongAnswer();
 signals:

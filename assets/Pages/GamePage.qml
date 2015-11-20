@@ -59,8 +59,8 @@ Rectangle {
                 currentTime = 0;
                 _game.time = 60
                 _game.resetLevel();
-                topBarContent.resetScore()
                 refreshGame()
+                topBarContent.resetScore()
                 _game.stopTimer();
             }
             topBarContent.setTime(currentTime);
@@ -212,10 +212,10 @@ Rectangle {
         id:popUpWindow
         property alias text : label.text
         onImminentHide : {
-            _game.resumeTimer();
+            _game.run()
         }
         onImminentOpen : {
-            _game.stopTimer();
+            _game.run()
         }
         content:Item {
             anchors.fill: parent

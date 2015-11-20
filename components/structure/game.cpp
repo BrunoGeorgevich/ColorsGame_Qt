@@ -127,11 +127,11 @@ void Game::setSettings(int rows,
                      "id=0");
 }
 
-void Game::startTimer(int turn, int total) { m_time = total; m_timer->start(turn); }
+void Game::startTimer(int turn, int total) { m_time = total; m_timer->start(turn); installState(new InGameState); }
 
-void Game::resumeTimer() { m_timer->start(); }
+void Game::resumeTimer() { m_timer->start();  installState(new InGameState); }
 
-void Game::stopTimer() { m_timer->stop(); }
+void Game::stopTimer() { m_timer->stop();  installState(new StopedGameState); }
 
 void Game::setTimerInterval(int interval) {
     if(m_timer->interval() >= 150) m_timer->setInterval(interval);
@@ -150,6 +150,16 @@ void Game::updateRecord(int v)
 {
     m_record = v;
     m_db->updateUser("users","record="+QByteArray::number(v),"id=0");
+}
+
+void Game::run()
+{
+    m_state->run();
+}
+
+void Game::installState(State *state)
+{
+    m_state = state;
 }
 
 
