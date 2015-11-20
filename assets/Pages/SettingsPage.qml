@@ -127,7 +127,7 @@ Rectangle {
                 fontSize:parent.height*0.45
                 anchors{ right: parent.right; rightMargin:proportion(0.3,0.025,parent); verticalCenter:parent.verticalCenter }
                 text:"JOGAR"
-                actions.onClicked : stackPages.push(gamePageComponent)
+                actions.onClicked : start()
             }
         }
     }
