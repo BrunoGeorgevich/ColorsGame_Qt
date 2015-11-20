@@ -37,7 +37,7 @@ Rectangle {
         _game.generateButtons();
         _game.startTimer(600,60);
         _game.stopTimer();
-        _game.setLevel(0);
+        _game.resetLevel();
     }
     objectName: "GamePage"
     color:"transparent"

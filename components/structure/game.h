@@ -37,6 +37,7 @@ public:
     Q_INVOKABLE void stopTimer();
     Q_INVOKABLE void setTimerInterval(int interval);
     Q_INVOKABLE int getTimerInterval();
+    Q_INVOKABLE void resetLevel();
     Q_INVOKABLE void setLevel(int l);
     Q_INVOKABLE void updateRecord(int v);
 signals:

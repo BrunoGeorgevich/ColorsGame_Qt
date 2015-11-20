@@ -135,6 +135,8 @@ void Game::setTimerInterval(int interval) {
 
 int Game::getTimerInterval() { return m_timer->interval(); }
 
+void Game::resetLevel(){ m_level=0; }
+
 void Game::setLevel(int l)
 {
     if(m_level < 15) m_level = l;
