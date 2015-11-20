@@ -22,7 +22,8 @@ SOURCES +=                                      \
     components/buttons/commonbutton.cpp         \
     components/external/qqmlobjectlistmodel.cpp \
     components/external/qqmlhelpers.cpp         \
-    components/external/database.cpp
+    components/external/database.cpp \
+    components/patterns/factory/buttonfactory.cpp
 
 HEADERS +=                                      \
     components/structure/line.h                 \
@@ -33,7 +34,8 @@ HEADERS +=                                      \
     components/buttons/commonbutton.h           \
     components/external/qqmlobjectlistmodel.h   \
     components/external/qqmlhelpers.h           \
-    components/external/database.h
+    components/external/database.h \
+    components/patterns/factory/buttonfactory.h
 
 RESOURCES += \
     qml.qrc \

@@ -24,7 +24,7 @@ class Game : public QObject
     QML_READONLY_PROPERTY(Database *, db)
     QML_WRITABLE_PROPERTY(int, record)
 public:
-    Game();
+    static Game *getInstance();
     void printStructure();
     Q_INVOKABLE bool generateButtons();
     Q_INVOKABLE void setSettings(int rows,
@@ -40,6 +40,8 @@ public:
     Q_INVOKABLE void resetLevel();
     Q_INVOKABLE void setLevel(int l);
     Q_INVOKABLE void updateRecord(int v);
+    void rightAnswer();
+    void wrongAnswer();
 signals:
     void rightAnswered();
     void timeEnded(int currentTime);
@@ -48,10 +50,10 @@ public slots:
     void onTimeout();
     void dbLog(QByteArray msg);
 private:
+    Game();
     void initDb();
     Settings *getUser();
-    void rightAnswer();
-    void wrongAnswer();
+    static Game *game;
 };
 
 #endif // GAME_H

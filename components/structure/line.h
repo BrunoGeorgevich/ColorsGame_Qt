@@ -22,8 +22,6 @@ public:
     Q_INVOKABLE QObject *getButtons();
 public slots:
     void buttonClicked(bool isRight);
-signals:
-    void aButtonWasClicked(bool);
 private:
     void generateButtons();
     QQmlObjectListModel<Button> *m_buttons;

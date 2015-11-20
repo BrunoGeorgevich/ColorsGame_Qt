@@ -1,5 +1,7 @@
 #include "game.h"
 
+Game *Game::game = new Game();
+
 Game::Game()
 {
     m_settings = NULL; m_timer = new QTimer(this); m_level = 0;
@@ -21,12 +23,16 @@ bool Game::generateButtons()
         Line *l = new Line(m_settings->get_columns(),
                            index,
                            (i == m_settings->get_rows() - 1) ? true : false);
-        connect(l, SIGNAL(aButtonWasClicked(bool)),
-                this, SLOT(lineWasClicked(bool)));
         m_lines->append(l);
         prevIndex = index;
     }
     return true;
+}
+
+Game *Game::getInstance()
+{
+    if(!game) game=new Game();
+    return game;
 }
 
 void Game::printStructure()
@@ -97,8 +103,6 @@ void Game::rightAnswer()
     Line *nLine =  new Line(m_settings->get_columns(),
                             qrand() % m_settings->get_columns(),
                             false);
-    connect(nLine, SIGNAL(aButtonWasClicked(bool)),
-            this, SLOT(lineWasClicked(bool)));
     m_lines->insert(0, nLine); Line *last = (Line *)m_lines->last();
     last->set_isFirst(true);
     emit rightAnswered();

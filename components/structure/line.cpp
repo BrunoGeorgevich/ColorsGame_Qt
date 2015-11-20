@@ -1,4 +1,6 @@
 #include "line.h"
+#include "game.h"
+#include "components/patterns/factory/buttonfactory.h"
 
 Line::Line(){
     m_rightBtnIndex = -1;
@@ -21,16 +23,15 @@ QObject *Line::getButtons()
 }
 void Line::buttonClicked(bool isRight)
 {
-    if(isRight && m_isFirst) emit aButtonWasClicked(true);
-    else emit aButtonWasClicked(false);
+    if(isRight && m_isFirst) Game::getInstance()->rightAnswer();
+    else Game::getInstance()->wrongAnswer();
 }
 void Line::generateButtons()
 {
     for(int i = 0; i < m_columns; i++) {
         Button *b;
-        if(i == m_rightBtnIndex) b = new RightButton();
-        else b = new CommonButton();
-        connect(b, SIGNAL(clicked(bool)), this, SLOT(buttonClicked(bool)));
+        if(i == m_rightBtnIndex) b = ButtonFactory::getButton(true,this);
+        else b = ButtonFactory::getButton(false,this);
         m_buttons->append(b);
     }
 }
