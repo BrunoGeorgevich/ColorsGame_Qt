@@ -54,8 +54,13 @@ Rectangle {
         onRightAnswered:{ refreshGame(); }
         onTimeEnded : {
             if(currentTime <= 0) {
-                buttonsGrid.visible = false;
+                popUpWindow.text = "Você\nperdeu!"
+                popUpWindow.open()
                 currentTime = 0;
+                _game.time = 60
+                _game.resetLevel();
+                topBarContent.resetScore()
+                refreshGame()
                 _game.stopTimer();
             }
             topBarContent.setTime(currentTime);
@@ -154,6 +159,7 @@ Rectangle {
             function incrementScore() { scoreCell.content++; }
             function setRecord(v) { recordCell.content = v }
             function getScore() { return scoreCell.content; }
+            function resetScore() { scoreCell.content=0; }
             function getRecord() { return recordCell.content; }
             function updateRecord() {
                 if(userRecord <= scoreCell.content)
@@ -204,6 +210,7 @@ Rectangle {
     }
     PopUpWindow {
         id:popUpWindow
+        property alias text : label.text
         onImminentHide : {
             _game.resumeTimer();
         }
@@ -213,6 +220,7 @@ Rectangle {
         content:Item {
             anchors.fill: parent
             Text{
+                id:label
                 anchors.fill: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
