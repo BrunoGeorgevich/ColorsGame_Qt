@@ -36,4 +36,5 @@ HEADERS +=                                      \
     components/external/database.h
 
 RESOURCES += \
-    qml.qrc
+    qml.qrc \
+    images.qrc

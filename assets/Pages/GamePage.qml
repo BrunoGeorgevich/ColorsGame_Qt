@@ -1,7 +1,10 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
 
-import "qrc:/components/"
+import "qrc:/components"
+import "qrc:/dialogs"
+import "qrc:/buttons"
+import "qrc:/bars"
 import line 1.0
 
 Rectangle {
@@ -39,7 +42,7 @@ Rectangle {
     objectName: "GamePage"
     color:"transparent"
     Timer {
-        interval:5000
+        interval:10000
         repeat: true
         running: true
         onTriggered: {
@@ -181,22 +184,41 @@ Rectangle {
         id:bottomBarContentComponent
         Item {
             anchors.fill: parent
-            Image {
-                anchors {
-                    top:parent.top; left:parent.left; bottom:parent.bottom
-                    margins: (parent.width < parent.height) ?
-                                 parent.width*(0.2) : parent.height*(0.2)
+            SvgButton {
+                height:parent.height
+                width:height
+                source: "qrc:/back.svg"
+                actions.onClicked: {
+                    var previousItem = stackPages.get(stackPages.depth - 2);
+                    if(previousItem.objectName == "MenuPage") stackPages.replace(settingsPageComponent);
+                    else stackPages.pop()
                 }
-                source: "qrc:/images/back-arrow.png"
-                fillMode: Image.PreserveAspectFit
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        var previousItem = stackPages.get(stackPages.depth - 2);
-                        if(previousItem.objectName == "MenuPage") stackPages.replace(settingsPageComponent);
-                        else stackPages.pop()
-                    }
-                }
+            }
+            PauseButton {
+                visible:(levelRect.state == "show")
+                height:parent.height*0.8
+                width:height
+                anchors{ right:parent.right; verticalCenter:parent.verticalCenter }
+            }
+        }
+    }
+    PopUpWindow {
+        id:popUpWindow
+        onImminentHide : {
+            _game.resumeTimer();
+        }
+        onImminentOpen : {
+            _game.stopTimer();
+        }
+        content:Item {
+            anchors.fill: parent
+            Text{
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.bold: true
+                font.pixelSize: proportion(0.3,0.2,parent)
+                text:"Pause"
             }
         }
     }

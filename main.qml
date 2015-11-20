@@ -2,6 +2,7 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 
 import "qrc:/components"
+import "qrc:/bars"
 import "qrc:/pages"
 
 ApplicationWindow {
@@ -10,6 +11,10 @@ ApplicationWindow {
     property alias bottomBar : bottomBar
     property alias topBar : topBar
     property int userRecord : _game.record
+    function proportion(p1,p2,r) {
+        return (root.width > root.height) ? r.height*p1 : r.width*p2;
+    }
+
     title:"Color's Game"; visible: true
     height:600; width:400
     TopBar {

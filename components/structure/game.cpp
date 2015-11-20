@@ -125,6 +125,8 @@ void Game::setSettings(int rows,
 
 void Game::startTimer(int turn, int total) { m_time = total; m_timer->start(turn); }
 
+void Game::resumeTimer() { m_timer->start(); }
+
 void Game::stopTimer() { m_timer->stop(); }
 
 void Game::setTimerInterval(int interval) {

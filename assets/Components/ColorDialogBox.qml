@@ -2,6 +2,8 @@ import QtQuick 2.5
 import QtQuick.Controls 1.2
 import QtGraphicalEffects 1.0
 
+import "qrc:/components"
+
 Item {
     id:colorDialogBoxRoot
     property alias okBtn : okButton
@@ -42,10 +44,14 @@ Item {
     }
     Rectangle {
         id:colorDialogBox
-        width:parent.width*(0.8)
+        width:proportion(0.8,0.8,parent)
         height:width
         anchors.verticalCenter: parent.verticalCenter
         color:"#DDD"
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {}
+        }
         Column {
             anchors { fill: parent; margins: parent.width*(0.03) }
             spacing: parent.width*(0.02)

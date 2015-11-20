@@ -33,6 +33,7 @@ public:
                      QByteArray primary,
                      QByteArray secondary);
     Q_INVOKABLE void startTimer(int turn, int total);
+    Q_INVOKABLE void resumeTimer();
     Q_INVOKABLE void stopTimer();
     Q_INVOKABLE void setTimerInterval(int interval);
     Q_INVOKABLE int getTimerInterval();
